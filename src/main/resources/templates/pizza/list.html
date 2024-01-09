@@ -40,7 +40,7 @@
 
         .btn-primary:hover {
             background-color: #c0392b;
-        }
+    }
     </style>
 </head>
 <body>
@@ -70,7 +70,7 @@
         <td>
             <a class="btn btn-primary" th:href="@{/pizza/show/{id}(id=${pizza.id})}">Details</a>
         </td>
-        <td><img th:src="${pizza.image}" th:alt="${pizza.name}"></td>
+        <td><img th:src="${pizza.image}" th:alt="${pizza.name}" style="max-width: 300px;"></td>
     </tr>
     </tbody>
 </table>
