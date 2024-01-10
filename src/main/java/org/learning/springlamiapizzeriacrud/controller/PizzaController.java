@@ -7,11 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +24,6 @@ public class PizzaController {
         model.addAttribute("pizzaList", pizzaList);
         return "pizza/list";
     }
-
     @GetMapping("/show/{id}")
     public String show(@PathVariable Integer id, Model model) {
         Optional<Pizza> result = pizzaRepository.findById(id);
@@ -47,10 +43,7 @@ public class PizzaController {
     }
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
-        // valido i dati del Book, cioè verifico se la mappa BindingResult ha errori
         if (bindingResult.hasErrors()) {
-            // qui gestisco che ho campi non validi
-            // ricaricando il template del form
             return "pizza/create";
         }
         Pizza savedPizza = pizzaRepository.save(formPizza);
