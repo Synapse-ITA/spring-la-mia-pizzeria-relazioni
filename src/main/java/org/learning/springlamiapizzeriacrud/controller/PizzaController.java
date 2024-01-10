@@ -1,16 +1,17 @@
 package org.learning.springlamiapizzeriacrud.controller;
-
+import jakarta.validation.Valid;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
 import org.learning.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,5 +39,22 @@ public class PizzaController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
         }
     }
-
+    @GetMapping("/create")
+    public String create(Model model) {
+        Pizza pizza = new Pizza();
+        model.addAttribute("pizza", pizza);
+        return "pizza/create";
+    }
+    @PostMapping("/create")
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+        // valido i dati del Book, cioè verifico se la mappa BindingResult ha errori
+        if (bindingResult.hasErrors()) {
+            // qui gestisco che ho campi non validi
+            // ricaricando il template del form
+            return "pizza/create";
+        }
+        Pizza savedPizza = pizzaRepository.save(formPizza);
+        return "redirect:/pizza/show/" + savedPizza.getId();
+    }
 }
+
