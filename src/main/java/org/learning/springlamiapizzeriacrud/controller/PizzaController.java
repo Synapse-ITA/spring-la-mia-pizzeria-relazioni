@@ -20,6 +20,7 @@ public class PizzaController {
 
     @GetMapping
     public String index(Model model) {
+        // METODO CHE LEGGE TUTTI GLI ELEMENTI DEL DATABASE
         List<Pizza> pizzaList = pizzaRepository.findAll();
         model.addAttribute("pizzaList", pizzaList);
         return "pizza/list";

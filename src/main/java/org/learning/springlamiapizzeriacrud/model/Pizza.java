@@ -10,6 +10,7 @@ public class Pizza {
     private Integer id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private BigDecimal price;
     @Lob
     private String description;
