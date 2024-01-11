@@ -52,26 +52,40 @@ h2 {
 <body>
 
 <div class="container">
-    <div>
+    <div class="row">
 <form th:action="@{/pizza/create}" th:object="${pizza}" method="post">
+
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        <input type="text" class="form-control" id="name" th:field="*{name}"
+               th:errorClass="is-invalid">
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+            <ul>
+                <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+            </ul>
+        </div>
     </div>
+
 
     <div class="mb-3">
         <label for="price" class="form-label">Price</label>
-        <input type="text" class="form-control" id="price" th:field="*{price}" required>
+        <input type="text" class="form-control" id="price" th:field="*{price}"
+               th:errorClass="is-invalid">
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
+            <ul>
+                <li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
+            </ul>
+        </div>
     </div>
 
     <div class="mb-3">
         <label for="image" class="form-label">URL image</label>
-        <input type="text" class="form-control" id="image" th:field="*{image}" required>
+        <input type="text" class="form-control" id="image" th:field="*{image}">
     </div>
 
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" th:field="*{description}" required></textarea>
+        <textarea class="form-control" id="description" th:field="*{description}"></textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">Create Pizza</button>

@@ -1,5 +1,9 @@
 package org.learning.springlamiapizzeriacrud.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 @Entity
 @Table(name = "pizza")
@@ -8,8 +12,11 @@ public class Pizza {
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     private Integer id;
+    @NotEmpty(message = "The field name cannot be empty")
     @Column(nullable = false)
     private String name;
+    @DecimalMin(value = "0.01", message = "The price must be greater than 0")
+    @NotNull(message = "The field price cannot be empty")
     @Column(nullable = false)
     private BigDecimal price;
     @Lob
