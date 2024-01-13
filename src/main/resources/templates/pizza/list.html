@@ -71,6 +71,13 @@ h2 {
         <td>
             <a class="btn btn-primary" th:href="@{/pizza/show/{id}(id=${pizza.id})}">Details</a>
             <a class="btn btn-primary" th:href="@{/pizza/edit/{id}(id=${pizza.id})}">Edit</a>
+            <form
+                    th:action="@{/pizza/delete/{id}(id=${pizza.id})}"
+                    method="post"
+                    onsubmit="return confirm('Are you sure?')"
+            >
+                <button type="submit" class="btn btn-primary mt-2">Delete</button>
+            </form>
         </td>
         <td><img th:src="${pizza.image}" th:alt="${pizza.name}" style="max-width: 300px;"></td>
     </tr>
