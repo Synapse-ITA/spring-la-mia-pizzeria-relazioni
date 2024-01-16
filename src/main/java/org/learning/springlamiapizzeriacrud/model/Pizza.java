@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 @Entity
 @Table(name = "pizza")
 public class Pizza {
@@ -22,6 +24,9 @@ public class Pizza {
     @Lob
     private String description;
     private String image;
+
+    @OneToMany(mappedBy = "pizza")
+    private List<SpecialOffer> specialOffers;
 
     // COSTRUTTORE
 
@@ -42,6 +47,14 @@ public class Pizza {
     }
 
     // GETTER AND SETTER
+
+    public List<SpecialOffer> getSpecialOffers() {
+        return specialOffers;
+    }
+
+    public void setSpecialOffers(List<SpecialOffer> specialOffers) {
+        specialOffers = specialOffers;
+    }
 
     public Integer getId() {
         return id;
