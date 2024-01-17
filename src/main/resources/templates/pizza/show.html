@@ -77,13 +77,27 @@
             <th>Title</th>
             <th>Start Time</th>
             <th>End Time</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="off : ${pizza.specialOffers}">
+        <tr th:each="off : ${pizza.specialOffers}"
+            th:classAppend="${off.isExpired() ? 'table-danger' : ''}">
             <td th:text="${off.offerTitle}"></td>
             <td th:text="${off.startTime}"></td>
             <td th:text="${off.endTime}"></td>
+            <td class="d-flex justify-content-between">
+                <a class="btn btn-primary" th:href="@{/specialoffers/edit/{id}(id=${off.id})}">Edit<i
+                        class="fa-solid fa-pen-to-square"></i></a>
+                <form
+                        th:action="@{/specialoffers/delete/{id}(id=${off.id})}"
+                        method="post"
+                        onsubmit="return confirm('Are you sure?')"
+                >
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-trash-can">Delete</i>
+                    </button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

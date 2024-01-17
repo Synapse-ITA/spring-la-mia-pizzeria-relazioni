@@ -67,4 +67,9 @@ public class SpecialOffer {
 
 
     // METODI
+
+    public boolean isExpired() {
+        // confronto la data odierna con la expireDate
+        return endTime.isBefore(LocalDate.now());
+    }
 }
