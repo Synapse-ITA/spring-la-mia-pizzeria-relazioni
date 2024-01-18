@@ -56,7 +56,10 @@
         <p><strong>Name:</strong> <span th:text="${pizza.name}"></span></p>
         <p><strong>Price:</strong> <span th:text="${pizza.price} + '€'"></span></p>
         <p><strong>Description:</strong> <span th:text="${pizza.description}"></span></p>
-        <!-- <p><strong>Ingredients:</strong> <span th:text="${pizza.ingredients.name}"></span></p> -->
+        <p>Ingredients:
+            <span th:each="ingredient : ${pizza.ingredients}" th:text="${ingredient.name} + ', '"></span>
+            <span th:unless="${pizza.ingredients}">N.D.</span>
+        </p>
         <p><img th:src="${pizza.image}" th:alt="${pizza.name}" style="max-width: 300px;"></p>
     </div>
 </div>

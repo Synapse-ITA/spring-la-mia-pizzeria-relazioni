@@ -1,7 +1,9 @@
 package org.learning.springlamiapizzeriacrud.controller;
 import jakarta.validation.Valid;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
+import org.learning.springlamiapizzeriacrud.repository.IngredientRepository;
 import org.learning.springlamiapizzeriacrud.repository.PizzaRepository;
+import org.learning.springlamiapizzeriacrud.repository.SpecialOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,10 @@ import java.util.Optional;
 public class PizzaController {
     @Autowired
     private PizzaRepository pizzaRepository;
+    @Autowired
+    private SpecialOfferRepository specialOfferRepository;
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     @GetMapping
     public String index(Model model) {
@@ -42,15 +48,22 @@ public class PizzaController {
     public String create(Model model) {
         Pizza pizza = new Pizza();
         model.addAttribute("pizza", pizza);
+        model.addAttribute("specialOffers", specialOfferRepository.findAll());
+        model.addAttribute("ingredients", ingredientRepository.findAll());
         return "pizza/create";
     }
+
+
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("specialOffers", specialOfferRepository.findAll());
+            model.addAttribute("ingredients", ingredientRepository.findAll());
             return "pizza/create";
-        }
+        } else {
         Pizza savedPizza = pizzaRepository.save(formPizza);
         return "redirect:/pizza/show/" + savedPizza.getId();
+        }
     }
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
