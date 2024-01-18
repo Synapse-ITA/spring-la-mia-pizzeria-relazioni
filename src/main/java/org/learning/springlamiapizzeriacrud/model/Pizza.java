@@ -25,8 +25,10 @@ public class Pizza {
     private String description;
     private String image;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", orphanRemoval = true)
     private List<SpecialOffer> specialOffers;
+    @ManyToMany
+    private List<Ingredient> ingredients;
 
     // COSTRUTTORE
 
@@ -94,6 +96,13 @@ public class Pizza {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     // METODI

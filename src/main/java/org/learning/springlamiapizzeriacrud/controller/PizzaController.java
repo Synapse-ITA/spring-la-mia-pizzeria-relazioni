@@ -76,6 +76,7 @@ public class PizzaController {
             // valido i dati della pizza
             if (bindingResult.hasErrors()) {
                 // se ci sono errori di validazione
+                // formBook.setSpecialOffers(pizzaToEdit.getSpecialOffers());
                 return "pizza/edit";
             }
 
